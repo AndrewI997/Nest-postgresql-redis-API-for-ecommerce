@@ -3,7 +3,7 @@ import { ItemTypesService } from './item-types.service';
 import { CreateItemTypeDto } from './dto/create-item-type.dto';
 import { UpdateItemTypeDto } from './dto/update-item-type.dto';
 
-@Controller('item-types')
+@Controller('item-type')
 export class ItemTypesController {
   constructor(private readonly itemTypesService: ItemTypesService) {}
 

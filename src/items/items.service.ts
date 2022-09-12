@@ -31,17 +31,21 @@ export class ItemsService {
   findByType(typeId: number) {
     return this.repository.find({
       where: {
-        typeId: typeId
-      }
+        type: {
+          id: typeId
+        }   }
     })
   }
-
 
   findBySubTypeId( item: {typeId: number, subTypeId: number} ) {
     return this.repository.find( {
       where: {
-        typeId: item.typeId,
-        subTypeId: item.subTypeId
+        type: {
+          id: item.typeId
+        },
+        subType: {
+          id: item.subTypeId
+        } 
       }
     } );
   }
@@ -49,9 +53,15 @@ export class ItemsService {
   findByKindId(item: {typeId: number, subTypeId: number, kindId: number}) {
     return this.repository.find({ 
       where: {
-        typeId: item.typeId,
-        subTypeId: item.subTypeId,
-        kindId: item.kindId
+        type: {
+          id: item.typeId
+        },
+        subType: {
+          id: item.subTypeId
+        },
+        kind: {
+          id: item.kindId
+        }
       }
      });
   }
@@ -59,11 +69,18 @@ export class ItemsService {
   findByStyleId(item: {typeId: number, subTypeId: number, styleId: number, kindId: number}) {
     return this.repository.find({ 
       where: {
-        typeId: item.typeId,
-        subTypeId: item.subTypeId,
-        styleId: item.styleId,
-        kindId: item.kindId
-        
+        type: {
+          id: item.typeId
+        },
+        subType: {
+          id: item.subTypeId
+        },
+        kind: {
+          id: item.kindId
+        },
+        style: {
+          id: item.styleId
+        }
       }
      });
   }

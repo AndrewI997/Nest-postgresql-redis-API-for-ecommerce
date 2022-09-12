@@ -26,7 +26,7 @@ import { ItemKindEntity } from './item-kinds/entities/item-kind.entity';
       port: 5000,
       username: 'postgres',
       password: 'output44w',
-      database: 'drugaya_mebel',
+      database: 'drugayamebel2',
       entities: [ItemEntity, AdminEntity, ItemTypeEntity, ItemSubTypeEntity, ItemStyleEntity, ItemKindEntity],
       synchronize: true,
     }),ItemsModule, AdminModule, AuthModule, ItemTypesModule, ItemSubTypesModule, ItemStylesModule, ItemKindsModule],
