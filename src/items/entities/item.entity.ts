@@ -17,7 +17,7 @@ export class ItemEntity {
     @Column({default: 0})
     price: number;
 
-    @Column({default: 0})
+    @Column({default: 0, nullable: true})
     raiting: number;
 
     @Column({ nullable: true })

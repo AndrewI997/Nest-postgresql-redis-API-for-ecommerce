@@ -11,12 +11,6 @@ export class ItemStyleEntity {
   @Column()
   name: string;
 
-  @ManyToMany(() => ItemSubTypeEntity, (types) => types.id, {
-    cascade: true,
-  })
-  @JoinTable()
-  subTypeId: ItemSubTypeEntity[]
-
   @OneToMany(() => ItemEntity, item => item.style)
   items: ItemEntity[]
 
