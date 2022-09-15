@@ -20,84 +20,104 @@ export class ItemsService {
     return this.repository.find();
   }
 
-  findOne(id: number) {
+  findOne(item: Partial<CreateItemDto>) {
     return this.repository.findOne({
       where: {
-        id: id
+        id: item.id
       }
     });
   }
 
-  findByType(typeId: number) {
+  findByType(item: Partial<CreateItemDto>) {
     return this.repository.find({
       where: {
         type: {
-          id: typeId
-        }   }
+          id: item.typeId
+        }
+      }
     })
   }
 
-  findBySubTypeId( item: {typeId: number, subTypeId: number} ) {
-    return this.repository.find( {
+  findBySubTypeId(item: Partial<CreateItemDto>) {
+    return this.repository.find({
       where: {
         type: {
           id: item.typeId
         },
         subType: {
           id: item.subTypeId
-        } 
-      }
-    } );
-  }
-
-  findByKindId(item: {typeId: number, subTypeId: number, kindId: number}) {
-    return this.repository.find({ 
-      where: {
-        type: {
-          id: item.typeId
-        },
-        subType: {
-          id: item.subTypeId
-        },
-        kind: {
-          id: item.kindId
         }
       }
-     });
+    });
   }
 
-  findByStyleId(item: {typeId: number, subTypeId: number, styleId: number, kindId: number}) {
-    return this.repository.find({ 
+  findByStyleId(item: Partial<CreateItemDto>) {
+    return this.repository.find({
       where: {
         type: {
           id: item.typeId
         },
         subType: {
           id: item.subTypeId
-        },
-        kind: {
-          id: item.kindId
         },
         style: {
           id: item.styleId
         }
       }
-     });
+    });
   }
 
-  async update(id: number, updateItemDto: UpdateItemDto) {
-    const item = this.findOne(id)
-    if (item) {
-      await this.repository.update(id, updateItemDto);
+  findByKindId(item: Partial<CreateItemDto>) {
+    return this.repository.find({
+      where: {
+        type: {
+          id: item.typeId
+        },
+        subType: {
+          id: item.subTypeId
+        },
+        style: {
+          id: item.styleId
+        },
+        kind: {
+          id: item.kindId
+        }
+      }
+    });
+  }
+
+  // findByKindId(item: {typeId: number, subTypeId: number, styleId: number, kindId: number}) {
+  //   return this.repository.find({ 
+  //     where: {
+  //       type: {
+  //         id: item.typeId
+  //       },
+  //       subType: {
+  //         id: item.subTypeId
+  //       },
+  //       style: {
+  //         id: item.styleId
+  //       },
+  //       kind: {
+  //         id: item.kindId
+  //       }
+  //     }
+  //    });
+  // }
+
+  async update(item: Partial<CreateItemDto>, updateItemDto: UpdateItemDto) {
+    const itemById = this.findOne(item)
+    if (itemById) {
+      await this.repository.update(item, updateItemDto);
     } else {
       throw new HttpException('', HttpStatus.BAD_REQUEST)
     };
   }
 
-  async remove(id: number) {
-    const item = this.findOne(id)
-    if (item) {
-      await this.repository.delete(id);;
+  async remove(item: Partial<CreateItemDto>) {
+    const itemById = this.findOne(item)
+    if (itemById) {
+      await this.repository.delete(item);;
     } else {
       throw new HttpException('', HttpStatus.BAD_REQUEST)
     };
