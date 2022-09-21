@@ -17,14 +17,27 @@ export class ItemsService {
   }
 
   findAll() {
-    return this.repository.find();
+    return this.repository.find({
+      relations: {
+          type: true,
+          subType: true,
+          style: true,
+          kind: true
+      },
+  });
   }
 
   findOne(item: Partial<CreateItemDto>) {
     return this.repository.findOne({
       where: {
         id: item.id
-      }
+      },
+      relations: {
+        type: true,
+        subType: true,
+        style: true,
+        kind: true
+    }
     });
   }
 
@@ -34,7 +47,13 @@ export class ItemsService {
         type: {
           id: item.typeId
         }
-      }
+      },
+      relations: {
+        type: true,
+        subType: true,
+        style: true,
+        kind: true
+    }
     })
   }
 
@@ -47,9 +66,16 @@ export class ItemsService {
         subType: {
           id: item.subTypeId
         }
-      }
+      },
+      relations: {
+        type: true,
+        subType: true,
+        style: true,
+        kind: true
+    }
     });
   }
+  
 
   findByStyleId(item: Partial<CreateItemDto>) {
     return this.repository.find({
@@ -63,7 +89,13 @@ export class ItemsService {
         style: {
           id: item.styleId
         }
-      }
+      },
+      relations: {
+        type: true,
+        subType: true,
+        style: true,
+        kind: true
+    }
     });
   }
 
@@ -82,7 +114,13 @@ export class ItemsService {
         kind: {
           id: item.kindId
         }
-      }
+      },
+      relations: {
+        type: true,
+        subType: true,
+        style: true,
+        kind: true
+    }
     });
   }
 

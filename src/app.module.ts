@@ -1,6 +1,3 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ItemsModule } from './items/items.module';
@@ -18,8 +15,18 @@ import { ItemSubTypeEntity } from './item-sub-types/entities/item-sub-type.entit
 import { ItemStyleEntity } from './item-styles/entities/item-style.entity';
 import { ItemKindEntity } from './item-kinds/entities/item-kind.entity';
 
+import { ConfigModule } from '@nestjs/config';
+
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import * as redisStore from 'cache-manager-redis-store';
+import { CacheModule } from '@nestjs/common/cache';
+import { ClientOpts } from 'redis';
+
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -27,10 +34,33 @@ import { ItemKindEntity } from './item-kinds/entities/item-kind.entity';
       username: 'postgres',
       password: 'output44w',
       database: 'drugayamebel2',
-      entities: [ItemEntity, AdminEntity, ItemTypeEntity, ItemSubTypeEntity, ItemStyleEntity, ItemKindEntity],
+      entities: [
+        ItemEntity,
+        AdminEntity,
+        ItemTypeEntity,
+        ItemSubTypeEntity,
+        ItemStyleEntity,
+        ItemKindEntity
+      ],
       synchronize: true,
-    }),ItemsModule, AdminModule, AuthModule, ItemTypesModule, ItemSubTypesModule, ItemStylesModule, ItemKindsModule],
+    }),
+    CacheModule.register<ClientOpts>({
+      isGlobal: true,
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
+      // ttl: 1000,
+      // max: 1000,
+    }),
+    ItemsModule,
+    AdminModule,
+    AuthModule,
+    ItemTypesModule,
+    ItemSubTypesModule,
+    ItemStylesModule,
+    ItemKindsModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
